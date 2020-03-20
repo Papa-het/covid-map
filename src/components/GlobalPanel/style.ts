@@ -5,9 +5,10 @@ export const GlobalPanelWrapper = styled.div`
   top: 50px;
   left: 0;
   bottom: 0;
-  width: calc(25vw);
+  width: calc(20vw);
   z-index: 2;
   background-color: #fff;
+  padding-top: 20px;
 
   display: flex;
   flex-direction: column;

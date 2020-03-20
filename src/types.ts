@@ -11,7 +11,7 @@ type Status = {
 
 export interface CityProps {
   id: number;
-  name: string;
+  city: { city_name: string };
   data: GeoJSON.FeatureCollection;
   status: Status;
   created_at: string;
@@ -38,4 +38,11 @@ export interface GlobalDataProps {
   global_infected: string;
   global_recovered: string;
   global_deaths: string;
+}
+
+export interface CityDataProps {
+  id: number;
+  city_name: string;
+  created_at: string;
+  updated_at: string;
 }

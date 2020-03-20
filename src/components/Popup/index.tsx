@@ -11,7 +11,7 @@ const Popup = (props: CityProps) => {
     <PopupWrapper>
       <PopupContent>
         <Block>
-          Город - <CityBlockName>{props.name}</CityBlockName>
+          Город - <CityBlockName>{props.city.city_name}</CityBlockName>
         </Block>
         <Block style={{ color: 'red' }}>
           Заражено - <CityBlockName>{props.status.infected}</CityBlockName>

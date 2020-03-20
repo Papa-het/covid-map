@@ -1,20 +1,26 @@
 import React from 'react';
 
+// context
+import { StoreProvider } from 'context';
+
+// components
 import { Header } from 'components/Header';
 import { MapApp } from 'components/Map';
 import { GlobalPanel } from 'components/GlobalPanel';
+import { CitiesPanel } from 'components/CitiesPanel';
 
 // styles
 import { GlobalStyles } from './globalStyles';
 
 const App = () => {
   return (
-    <div>
+    <StoreProvider>
       <GlobalStyles />
       <Header />
-      <GlobalPanel />
       <MapApp />
-    </div>
+      <GlobalPanel />
+      <CitiesPanel />
+    </StoreProvider>
   );
 };
 

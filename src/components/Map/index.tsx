@@ -35,7 +35,7 @@ const MapApp = () => {
       axiosRequest.get('/sources').then(({ data }) => setSources(data));
     if (!cities.length)
       axiosRequest
-        .get('/cities')
+        .get('/geo-cities')
         .then(({ data }: AxiosResponse<CityProps[]>) => {
           const formatted = citiesAdapter(data);
           setCities(formatted);
@@ -45,7 +45,7 @@ const MapApp = () => {
   return (
     <MapContainer>
       <Map
-        center={[49, 68]}
+        center={[49, 75]}
         zoom={5}
         minZoom={5}
         maxZoom={16}
