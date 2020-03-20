@@ -24,3 +24,18 @@ export interface CountryProps {
   created_at: string;
   updated_at: string;
 }
+
+export interface SourcesProps {
+  id: number;
+  geo: GeoJSON.FeatureCollection;
+  city: string;
+  address: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface GlobalDataProps {
+  global_infected: string;
+  global_recovered: string;
+  global_deaths: string;
+}

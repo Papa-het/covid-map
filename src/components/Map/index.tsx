@@ -6,7 +6,8 @@ import {
   FeatureGroup,
   ZoomControl
 } from 'react-leaflet';
-import axios, { AxiosResponse } from 'axios';
+import { axiosRequest } from 'utils/axios.config';
+import { AxiosResponse } from 'axios';
 
 // components
 import { Popup } from 'components/Popup';
@@ -15,28 +16,31 @@ import { Popup } from 'components/Popup';
 import { citiesAdapter } from 'utils/helpers';
 
 // types
-import { CityProps } from 'types';
+import { CityProps, SourcesProps } from 'types';
 
 // styles
 import { MapContainer } from './style';
 
 const MapApp = () => {
   const [country, setCountry] = useState(null);
+  const [sources, setSources] = useState([]);
   const [cities, setCities] = useState<CityProps[]>([]);
 
   useEffect(() => {
     if (!country)
-      axios
-        .get('http://localhost:1337/countries')
+      axiosRequest
+        .get('/countries')
         .then(({ data }) => setCountry(data[0].data));
+    if (!sources.length)
+      axiosRequest.get('/sources').then(({ data }) => setSources(data));
     if (!cities.length)
-      axios
-        .get('http://localhost:1337/cities')
+      axiosRequest
+        .get('/cities')
         .then(({ data }: AxiosResponse<CityProps[]>) => {
           const formatted = citiesAdapter(data);
           setCities(formatted);
         });
-  }, [country, cities]);
+  }, [country, cities, sources]);
 
   return (
     <MapContainer>
@@ -77,6 +81,19 @@ const MapApp = () => {
             ))}
           </FeatureGroup>
         )}
+        {sources && (
+          <FeatureGroup>
+            {sources.map((el: SourcesProps) => (
+              <GeoJSON
+                key={el.id}
+                data={el.geo}
+                color="#cf3425"
+                fillOpacity={0.5}
+              />
+            ))}
+          </FeatureGroup>
+        )}
+        ƒ
       </Map>
     </MapContainer>
   );
