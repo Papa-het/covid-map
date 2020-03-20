@@ -1,18 +1,20 @@
 import React, { createContext, useReducer } from 'react';
 
 // types
-import { CityDataProps, SourcesProps } from 'types';
+import { CityProps, SourcesProps, SelectedLayerProps } from 'types';
 
 interface State {
-  cities: CityDataProps[];
+  cities: CityProps[];
   sources: SourcesProps[];
+  selected: SelectedLayerProps | undefined;
 }
 
 type Action =
-  | { type: 'setCities'; payload: CityDataProps[] }
-  | { type: 'setSources'; payload: SourcesProps[] };
+  | { type: 'setCities'; payload: CityProps[] }
+  | { type: 'setSources'; payload: SourcesProps[] }
+  | { type: 'setSelected'; payload: SelectedLayerProps };
 
-const initialState: State = { cities: [], sources: [] };
+const initialState: State = { cities: [], sources: [], selected: undefined };
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -20,6 +22,8 @@ const reducer = (state: State, action: Action) => {
       return { ...state, cities: action.payload };
     case 'setSources':
       return { ...state, sources: action.payload };
+    case 'setSelected':
+      return { ...state, selected: action.payload };
     default:
       throw new Error();
   }

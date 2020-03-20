@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import {
   Map,
   TileLayer,
@@ -8,6 +8,9 @@ import {
 } from 'react-leaflet';
 import { axiosRequest } from 'utils/axios.config';
 import { AxiosResponse } from 'axios';
+
+// context
+import { Store } from 'context';
 
 // components
 import { Popup } from 'components/Popup';
@@ -22,9 +25,23 @@ import { CityProps, SourcesProps } from 'types';
 import { MapContainer } from './style';
 
 const MapApp = () => {
+  const mapRef = useRef<Map>(null);
+  const selectedRef = useRef<FeatureGroup>(null);
   const [country, setCountry] = useState(null);
   const [sources, setSources] = useState([]);
   const [cities, setCities] = useState<CityProps[]>([]);
+
+  const { state } = useContext(Store);
+
+  const fitMapBounds = () => {
+    if (mapRef && mapRef.current) {
+      const map = mapRef.current.leafletElement;
+      const list = selectedRef.current?.leafletElement;
+      if (list) {
+        map.fitBounds(list.getBounds(), { maxZoom: 16 });
+      }
+    }
+  };
 
   useEffect(() => {
     if (!country)
@@ -40,11 +57,13 @@ const MapApp = () => {
           const formatted = citiesAdapter(data);
           setCities(formatted);
         });
-  }, [country, cities, sources]);
+    if (state.selected) fitMapBounds();
+  }, [country, cities, sources, state.selected]);
 
   return (
     <MapContainer>
       <Map
+        ref={mapRef}
         center={[49, 75]}
         zoom={5}
         minZoom={5}
@@ -86,14 +105,23 @@ const MapApp = () => {
             {sources.map((el: SourcesProps) => (
               <GeoJSON
                 key={el.id}
-                data={el.geo}
+                data={el.data}
                 color="#cf3425"
                 fillOpacity={0.5}
               />
             ))}
           </FeatureGroup>
         )}
-        ƒ
+        {state.selected && (
+          <FeatureGroup ref={selectedRef}>
+            <GeoJSON
+              key={state.selected.id}
+              data={state.selected.data}
+              color="#cf3425"
+              fillOpacity={0.5}
+            />
+          </FeatureGroup>
+        )}
       </Map>
     </MapContainer>
   );

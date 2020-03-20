@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const GlobalPanelWrapper = styled.div`
   position: absolute;
-  top: 50px;
+  top: 60px;
   left: 0;
   bottom: 0;
   width: calc(20vw);

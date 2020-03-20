@@ -22,8 +22,8 @@ export const citiesAdapter = (list: CityProps[]) =>
 const sourceItem = (source: SourcesProps) => ({
   ...source,
   geo: {
-    ...source.geo,
-    features: source.geo.features.map(el => ({
+    ...source.data,
+    features: source.data.features.map(el => ({
       ...el,
       properties: {
         ...el.properties,

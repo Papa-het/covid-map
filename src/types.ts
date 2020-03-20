@@ -27,7 +27,7 @@ export interface CountryProps {
 
 export interface SourcesProps {
   id: number;
-  geo: GeoJSON.FeatureCollection;
+  data: GeoJSON.FeatureCollection;
   city: string;
   address: string;
   created_at: string;
@@ -45,4 +45,9 @@ export interface CityDataProps {
   city_name: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface SelectedLayerProps {
+  id: number;
+  data: GeoJSON.FeatureCollection;
 }

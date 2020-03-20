@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 4;
-  height: 50px;
+  height: 60px;
   padding-left: 25px;
   padding-right: 25px;
 
